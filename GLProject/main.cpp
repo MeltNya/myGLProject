@@ -39,7 +39,8 @@ int main() {
         return -1;
     }
     //设置视口绘制区域
-    glViewport(0, 0, 800, 600);
+   // glViewport(0, 0, 800, 600);
+    glViewport(0, 0, 900, 600);
     //-----------------------------------------------shader complie---------------------------------------------------
     //compile shader
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
