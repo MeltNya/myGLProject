@@ -26,5 +26,16 @@
     <ClInclude Include="GLGeometry.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fshader.fs">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="vshader.vs">
+      <Filter>源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>
