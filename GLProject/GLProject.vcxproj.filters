@@ -21,6 +21,9 @@
     <ClCompile Include="GLGeometry.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GLGeometry.h">
@@ -31,10 +34,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="fshader.fs">
+    <None Include="vshader.vs">
       <Filter>源文件</Filter>
     </None>
-    <None Include="vshader.vs">
+    <None Include="fshader.fs">
       <Filter>源文件</Filter>
     </None>
   </ItemGroup>
