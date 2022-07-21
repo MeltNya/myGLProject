@@ -1,9 +1,10 @@
 #define GLEW_STATIC
+#define STB_IMAGE_IMPLEMENTATION
 #include<iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include"Shader.h"
-
+#include "stb_image.h"
 void processInt(GLFWwindow* window);
 const char* vertexShaderSource = "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
@@ -47,38 +48,74 @@ int main() {
 
     //--------------------------------------------------vertex---------------------------------------------------
     float vertices[] = {
-        // positions         // colors
-         0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  // bottom right
-        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
-         0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f   // top 
+        //     ---- 位置 ----       ---- 颜色 ----     - 纹理坐标 -
+             0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // 右上
+             0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // 右下
+            -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // 左下
+            -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // 左上
     };
     unsigned int indices[] = {  // note that we start from 0!
-    0, 1, 3,  // first Triangle
-    1, 2, 3   // second Triangle
+    0, 1, 2,  // first Triangle
+    2, 3, 0   // second Triangle
     };
 
     unsigned int VBO, VAO, EBO;
     glGenVertexArrays(1, &VAO);   //产生vao 
     glGenBuffers(1, &VBO);
-    //glGenBuffers(1, &EBO);
+    glGenBuffers(1, &EBO);
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     //复制顶点到缓冲
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-  //  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-   // glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
     //设置顶点属性的指针
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
-
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6* sizeof(float)));
+    glEnableVertexAttribArray(2);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+    //-------------------------------------texture----------------------------
+    int width, height, nrChannel;
+    unsigned int texBufferA;
+    glGenBuffers(1, &texBufferA);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texBufferA);
+    unsigned char* data = stbi_load("container.jpg", &width, &height, &nrChannel, 0);
+    if (data) {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);   //第二个参数是mipmap层级
+        glGenerateMipmap(GL_TEXTURE_2D);
+        cout << "load image1" << endl;
+    }
+    else {
+        cout << "load image failed" << endl;
+    }
 
-
+    stbi_image_free(data);
+    unsigned int texBufferB;
+    glGenBuffers(1, &texBufferB);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, texBufferB);
+    // set texture wrapping to GL_REPEAT (default wrapping method)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // set texture filtering parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    unsigned char* data2 = stbi_load("awesomeface.png", &width, &height, &nrChannel, 0);
+    if (data2) {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data2);   //第二个参数是mipmap层级
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else {
+        cout << "load image failed" << endl;
+    }
+    stbi_image_free(data2);
     //loop渲染循环
     while (!glfwWindowShouldClose(window))
     {
@@ -88,14 +125,15 @@ int main() {
         //清屏
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+
+
         ourShader.Use();
-       // double  timeValue = glfwGetTime();
-       // float greenValue = static_cast<float>(sin(timeValue) / 2.0 + 0.5);
-       // int vertexColorLocation = glGetUniformLocation(ourShader.id, "ourColor");
-      //  glUniform4f(vertexColorLocation, 0.0f, 1.0f, 0.0f, 1.0f);
-      //  glUseProgram(shaderProgram);
+        glUniform1i(glGetUniformLocation(ourShader.id, "ourTexture"), 0);
+        glUniform1i(glGetUniformLocation(ourShader.id, "ourFace"), 1);
+        //ourShader.setInt("ourFace", 1);
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+      //  glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glfwSwapBuffers(window);
         glfwPollEvents();
     }

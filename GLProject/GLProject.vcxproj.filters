@@ -32,6 +32,9 @@
     <ClInclude Include="Shader.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vshader.vs">
@@ -40,5 +43,13 @@
     <None Include="fshader.fs">
       <Filter>源文件</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="container.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="awesomeface.png">
+      <Filter>资源文件</Filter>
+    </Image>
   </ItemGroup>
 </Project>
