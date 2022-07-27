@@ -5,21 +5,16 @@
 #include <GLFW/glfw3.h>
 #include"Shader.h"
 #include "stb_image.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include"Camera.h"
 void processInt(GLFWwindow* window);
-const char* vertexShaderSource = "#version 330 core\n"
-"layout (location = 0) in vec3 aPos;\n"
-"void main()\n"
-"{\n"
-"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-"}\0";
-const char* fragmentShaderSource = "#version 330 core\n"
-"out vec4 FragColor;\n"
-"void main()\n"
-"{\n"
-"   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-"}\n\0";
+
 int main() {
     glfwInit();
+    float screenWidth = 800;
+    float screenHeight = 600;
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -40,7 +35,7 @@ int main() {
         return -1;
     }
     //设置视口绘制区域
-    glViewport(0, 0, 800, 600);
+    glViewport(0, 0, screenWidth, screenHeight);
     //glEnable(GL_CULL_FACE);
     //glCullFace(GL_FRONT);
     //-----------------------------------------------shader complie---------------------------------------------------
@@ -134,6 +129,14 @@ int main() {
     glUniform1i(glGetUniformLocation(ourShader.id, "texture1"), 0);
     // or set it via the texture class
     ourShader.setInt("texture2", 1);
+    glm::mat4 projection;
+    projection = glm::perspective(glm::radians(45.0f), screenWidth / screenHeight, 0.1f, 100.0f);
+    ourShader.setMat4("projection", projection);
+    Camera camera( glm::vec3(0.0f, 0.0f, 3.0f ),
+                               glm::vec3(0.0f, 0.0f, 0.0f ) ,
+                               glm::vec3(0.0f, 1.0f, 0.0f ) );
+    glm::mat4 view = camera.GetViewMat();
+    ourShader.setMat4("view", view);
 
     //loop渲染循环
     while (!glfwWindowShouldClose(window))
@@ -149,8 +152,12 @@ int main() {
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture2);
         ourShader.Use();
-        glUniform1i(glGetUniformLocation(ourShader.id, "ourTexture"), 0);
-        ourShader.setInt("ourFace", 1);
+        glm::mat4 model;
+        model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+        int modelLoc = glGetUniformLocation(ourShader.id, "model");
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
         glBindVertexArray(VAO);
       //  glDrawArrays(GL_TRIANGLES, 0, 3);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
