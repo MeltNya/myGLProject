@@ -2,6 +2,7 @@
 
 Camera::Camera() {
 	Pos = glm::vec3(0.0f, 0.0f, 3.0f);
+	worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
 	cameraForward = glm::normalize(glm::vec3(0.0f,0.0f,0.0f)-Pos);
 	cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 	ComputeView();
@@ -17,10 +18,18 @@ Camera::Camera(glm::vec3 pos, glm::vec3 target, glm::vec3 world_up) {
 	cameraUp = glm::normalize(glm::cross(worldUp, cameraRight));
 	ComputeView();
 }
-Camera::Camera(glm::vec3 pos, glm::vec3 target, glm::vec3 world_up, glm::vec3 pitch, glm::vec3 yaw) {
+Camera::Camera(glm::vec3 pos,  glm::vec3 world_up, float pitch,float yaw) {
 	Pos = pos;
 	worldUp = world_up;
-	//cameraForward.x =cos(glm::radians(pitch)) * sin(glm::radians(yaw));
+	cameraPitch = pitch;
+	cameraYaw = yaw;
+	cameraForward.x =glm::cos( glm::radians( pitch) ) * glm::sin(glm::radians(yaw) );
+	cameraForward.y =glm:: sin( glm::radians(pitch) );
+	cameraForward.z =glm:: cos( glm::radians(pitch) ) * cos( glm::radians(yaw) );
+	cameraForward = glm::normalize(cameraForward);
+	cameraRight = glm::normalize(glm::cross(cameraForward, worldUp));
+	cameraUp = glm::normalize(glm::cross(worldUp, cameraRight));
+	ComputeView();
 }
 
 void Camera::ComputeView() {
@@ -29,6 +38,23 @@ void Camera::ComputeView() {
 void Camera::SetCameraPos(glm::vec3 pos) {
 	Pos = pos;
 	ComputeView();
+}
+void Camera::Rotate() {
+	if (cameraPitch > 89.0f)
+		cameraPitch = 89.0f;
+	if (cameraPitch < -89.0f)
+		cameraPitch = -89.0f;
+	cameraForward.x = glm::cos(cameraPitch) * glm::sin(cameraYaw);
+	cameraForward.y = glm::sin(cameraPitch);
+	cameraForward.z = glm::cos(cameraPitch) * cos(cameraYaw);
+	cameraForward = glm::normalize(cameraForward);
+	cameraRight = glm::normalize(glm::cross(cameraForward, worldUp));
+	cameraUp = glm::normalize(glm::cross(worldUp, cameraRight));
+	ComputeView();
+}
+void Camera::UpdatePY(float pitchOffset, float yawOffset) {
+	cameraPitch += pitchOffset;
+	cameraYaw += yawOffset;
 }
 glm::mat4 Camera::GetViewMat() {
 	return ViewMat;

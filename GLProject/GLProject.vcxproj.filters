@@ -49,6 +49,12 @@
     <None Include="fshader.fs">
       <Filter>源文件</Filter>
     </None>
+    <None Include="vshader2.vs">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="fshader2.fs">
+      <Filter>源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="container.jpg">

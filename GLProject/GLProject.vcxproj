@@ -166,9 +166,11 @@
     <None Include="fshader.fs">
       <FileType>Document</FileType>
     </None>
+    <None Include="fshader2.fs" />
     <None Include="vshader.vs">
       <FileType>Document</FileType>
     </None>
+    <None Include="vshader2.vs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="awesomeface.png" />
