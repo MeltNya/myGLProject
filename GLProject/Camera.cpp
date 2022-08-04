@@ -44,9 +44,9 @@ void Camera::Rotate() {
 		cameraPitch = 89.0f;
 	if (cameraPitch < -89.0f)
 		cameraPitch = -89.0f;
-	cameraForward.x = glm::cos(cameraPitch) * glm::sin(cameraYaw);
-	cameraForward.y = glm::sin(cameraPitch);
-	cameraForward.z = glm::cos(cameraPitch) * cos(cameraYaw);
+	cameraForward.x = glm::cos(glm::radians(cameraPitch)) * glm::sin(glm::radians(cameraYaw));
+	cameraForward.y = glm::sin(glm::radians(cameraPitch));
+	cameraForward.z = glm::cos(glm::radians(cameraPitch)) * cos(glm::radians(cameraYaw));
 	cameraForward = glm::normalize(cameraForward);
 	cameraRight = glm::normalize(glm::cross(cameraForward, worldUp));
 	cameraUp = glm::normalize(glm::cross(worldUp, cameraRight));

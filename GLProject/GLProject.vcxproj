@@ -153,12 +153,16 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GLGeometry.cpp" />
+    <ClCompile Include="GLProgram.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MyGLHelper.cpp" />
     <ClCompile Include="Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="GLGeometry.h" />
+    <ClInclude Include="GLProgram.h" />
+    <ClInclude Include="MyGLHelper.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
   </ItemGroup>

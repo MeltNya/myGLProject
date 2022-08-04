@@ -4,27 +4,27 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include"Shader.h"
-#include "stb_image.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include"Camera.h"
+#include"MyGLHelper.h"
 void processInt(GLFWwindow* window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 float lastX = 400, lastY = 300;
 bool firstMouse = true;
 Camera camera(
     glm::vec3(0.0f, 0.0f, 8.0f),
-    glm::vec3(0.0f, 1.0f, 0.0f), 15.0f, 180.0f
+    glm::vec3(0.0f, 1.0f, 0.0f), 10.0f, 180.0f
 );
 int main() {
+#pragma region open window
     glfwInit();
     float screenWidth = 800;
     float screenHeight = 600;
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     //创建窗口
     GLFWwindow* window = glfwCreateWindow(800, 600, "MyGLWindow", NULL, NULL);
     if (window == nullptr) {
@@ -42,11 +42,12 @@ int main() {
         return -1;
     }
     //设置视口绘制区域
+    
     glViewport(0, 0, screenWidth, screenHeight);
     //glEnable(GL_CULL_FACE);
     //glCullFace(GL_FRONT);
     glEnable(GL_DEPTH_TEST);
-    
+#pragma endregion
 
     //-----------------------------------------------shader complie---------------------------------------------------
     Shader ourShader("vshader2.vs", "fshader2.fs");
@@ -64,6 +65,7 @@ int main() {
     2, 3, 0   // second Triangle
     };
     */
+#pragma region Model Data
     float vertices[] = {
         -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
          0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
@@ -120,6 +122,7 @@ int main() {
         glm::vec3(1.5f,  0.2f, -1.5f),
         glm::vec3(-1.3f,  1.0f, -1.5f)
     };
+#pragma endregion
     unsigned int VBO, VAO, EBO;
     glGenVertexArrays(1, &VAO);   //产生vao 
     glGenBuffers(1, &VBO);
@@ -146,7 +149,7 @@ int main() {
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float) ) );
     glEnableVertexAttribArray(1);
     //-------------------------------------texture----------------------------
-    unsigned int texture1, texture2;
+    /*unsigned int texture1, texture2;
     // texture 1
     glGenTextures(1, &texture1);
     glBindTexture(GL_TEXTURE_2D, texture1);
@@ -192,9 +195,11 @@ int main() {
     {
         std::cout << "Failed to load texture2" << std::endl;
     }
-    stbi_image_free(data);
-
-    // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
+    stbi_image_free(data);*/
+    unsigned int texture1,texture2;
+    texture1= MyGLHelper::LoadImage("container.jpg", 0, GL_RGB, GL_RGB);
+    texture2= MyGLHelper::LoadImage("awesomeface.png", 0, GL_RGBA, GL_RGBA);
+   
     // -------------------------------------------------------------------------------------------
     ourShader.Use(); 
     ourShader.setInt("texture1", 0 );
@@ -217,15 +222,9 @@ int main() {
         glBindTexture(GL_TEXTURE_2D, texture2);
 
         ourShader.Use();
-
-      /* Camera camera(glm::vec3(0.0f, 0.0f, 8.0f),
-            glm::vec3(0.0f, 0.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 0.0f)
-        );*/
-       // camera.Rotate(10.0f, 180.0f);
         glm::mat4 view = camera.GetViewMat();
         ourShader.setMat4("view", camera.GetViewMat());
-        glBindVertexArray(VAO);
+        
         for (size_t i = 0; i < 10; i++)
         {
             glm::mat4 model = glm::mat4(1.0f);
@@ -233,9 +232,9 @@ int main() {
             float angle = 20.0f * i;
             model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
             ourShader.setMat4("model", model);
-
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
+        glBindVertexArray(VAO);
       //  glDrawArrays(GL_TRIANGLES, 0, 3);
       //  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glfwSwapBuffers(window);
