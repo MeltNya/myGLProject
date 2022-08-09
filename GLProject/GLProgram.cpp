@@ -15,7 +15,6 @@ void GLProgram::WindowInit() {
         glfwTerminate();
     }
     glfwMakeContextCurrent(window);
-   // glfwSetCursorPosCallback(window, mouse_callback);
     glewExperimental = true;
     if (glewInit() != GLEW_OK) {
         printf("glew failed.");
@@ -23,12 +22,12 @@ void GLProgram::WindowInit() {
        // return -1;
     }
     //设置视口绘制区域
-
     glViewport(0, 0, screenWidth, screenHeight);
-    //glEnable(GL_CULL_FACE);
-    //glCullFace(GL_FRONT);
     glEnable(GL_DEPTH_TEST);
 	
+}
+void GLProgram::CreateObjects() {
+
 }
 void GLProgram::Render() {
 

@@ -67,6 +67,18 @@
     <None Include="fshader2.fs">
       <Filter>源文件</Filter>
     </None>
+    <None Include="light1.fs">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="basicLight.vs">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="basicLight.fs">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="mat1.fs">
+      <Filter>源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="container.jpg">

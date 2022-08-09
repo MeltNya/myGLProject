@@ -1,17 +1,30 @@
-﻿  GLProgram.cpp
-  main.cpp
-E:\CPPcode\GLProject\GLProject\main.cpp(46,35): warning C4244: “参数”: 从“float”转换到“GLsizei”，可能丢失数据
-E:\CPPcode\GLProject\GLProject\main.cpp(46,22): warning C4244: “参数”: 从“float”转换到“GLsizei”，可能丢失数据
-E:\CPPcode\GLProject\GLProject\main.cpp(126,28): warning C4101: “EBO”: 未引用的局部变量
-E:\CPPcode\GLProject\GLProject\main.cpp(256,17): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\CPPcode\GLProject\GLProject\main.cpp(257,17): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\CPPcode\GLProject\GLProject\main.cpp(260,19): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\CPPcode\GLProject\GLProject\main.cpp(261,19): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\CPPcode\GLProject\GLProject\main.cpp(262,13): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\CPPcode\GLProject\GLProject\main.cpp(263,13): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-  正在生成代码...
+﻿  main.cpp
+E:\CPPcode\GLProject\GLProject\main.cpp(144,27): warning C4244: “=”: 从“double”转换到“T”，可能丢失数据
+          with
+          [
+              T=float
+          ]
+E:\CPPcode\GLProject\GLProject\main.cpp(145,27): warning C4244: “=”: 从“double”转换到“T”，可能丢失数据
+          with
+          [
+              T=float
+          ]
+E:\CPPcode\GLProject\GLProject\main.cpp(146,27): warning C4244: “=”: 从“double”转换到“T”，可能丢失数据
+          with
+          [
+              T=float
+          ]
+E:\CPPcode\GLProject\GLProject\main.cpp(88,28): warning C4101: “EBO”: 未引用的局部变量
+E:\CPPcode\GLProject\GLProject\main.cpp(190,17): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+E:\CPPcode\GLProject\GLProject\main.cpp(191,17): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+E:\CPPcode\GLProject\GLProject\main.cpp(194,19): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\CPPcode\GLProject\GLProject\main.cpp(195,19): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\CPPcode\GLProject\GLProject\main.cpp(196,13): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+E:\CPPcode\GLProject\GLProject\main.cpp(197,13): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
 LINK : warning LNK4098: 默认库“MSVCRT”与其他库的使用冲突；请使用 /NODEFAULTLIB:library
 LINK : warning LNK4098: 默认库“LIBCMT”与其他库的使用冲突；请使用 /NODEFAULTLIB:library
+LINK : warning LNK4217: 符号“_glewInit@0”(在“ glew32s.lib(glew.obj)”中定义)已由“GLProgram.obj”(函数“"public: void __thiscall GLProgram::WindowInit(void)" (?WindowInit@GLProgram@@QAEXXZ)”中)导入
+LINK : warning LNK4217: 符号“_glewExperimental”(在“ glew32s.lib(glew.obj)”中定义)已由“GLProgram.obj”(函数“"public: void __thiscall GLProgram::WindowInit(void)" (?WindowInit@GLProgram@@QAEXXZ)”中)导入
 LINK : warning LNK4217: 符号“___glewAttachShader”(在“ glew32s.lib(glew.obj)”中定义)已由“Shader.obj”(函数“__catch$??0Shader@@QAE@PBD0@Z$0”中)导入
 LINK : warning LNK4217: 符号“___glewCompileShader”(在“ glew32s.lib(glew.obj)”中定义)已由“Shader.obj”(函数“__catch$??0Shader@@QAE@PBD0@Z$0”中)导入
 LINK : warning LNK4217: 符号“___glewCreateProgram”(在“ glew32s.lib(glew.obj)”中定义)已由“Shader.obj”(函数“__catch$??0Shader@@QAE@PBD0@Z$0”中)导入

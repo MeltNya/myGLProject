@@ -15,8 +15,9 @@ class Camera {
 		glm::mat4 GetViewMat();
 		void Rotate();
 		void UpdatePY(float pitch, float yaw);
-	private:
 		glm::vec3 Pos;
+	private:
+		
 		glm::vec3 worldUp;
 		glm::vec3 cameraForward;		//指向摄像机的z轴正方向
 		glm::vec3 cameraRight;

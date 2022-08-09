@@ -167,10 +167,14 @@
     <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="basicLight.fs" />
+    <None Include="basicLight.vs" />
     <None Include="fshader.fs">
       <FileType>Document</FileType>
     </None>
     <None Include="fshader2.fs" />
+    <None Include="light1.fs" />
+    <None Include="mat1.fs" />
     <None Include="vshader.vs">
       <FileType>Document</FileType>
     </None>

@@ -1,4 +1,5 @@
 #include"Camera.h"
+#include <iostream>
 
 Camera::Camera() {
 	Pos = glm::vec3(0.0f, 0.0f, 3.0f);
@@ -51,6 +52,7 @@ void Camera::Rotate() {
 	cameraRight = glm::normalize(glm::cross(cameraForward, worldUp));
 	cameraUp = glm::normalize(glm::cross(worldUp, cameraRight));
 	ComputeView();
+	//std::cout << "camera move" <<std ::endl;
 }
 void Camera::UpdatePY(float pitchOffset, float yawOffset) {
 	cameraPitch += pitchOffset;
