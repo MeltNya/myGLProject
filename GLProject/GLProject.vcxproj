@@ -176,6 +176,8 @@
     </None>
     <None Include="fshader2.fs" />
     <None Include="light1.fs" />
+    <None Include="LightMap.fs" />
+    <None Include="LightMap.vs" />
     <None Include="mat1.fs" />
     <None Include="vshader.vs">
       <FileType>Document</FileType>
@@ -185,6 +187,8 @@
   <ItemGroup>
     <Image Include="awesomeface.png" />
     <Image Include="container.jpg" />
+    <Image Include="container2.png" />
+    <Image Include="container2_specular.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

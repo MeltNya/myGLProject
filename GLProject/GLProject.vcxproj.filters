@@ -33,6 +33,9 @@
     <ClCompile Include="GLProgram.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GLGeometry.h">
@@ -51,6 +54,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="GLProgram.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -79,12 +85,24 @@
     <None Include="mat1.fs">
       <Filter>源文件</Filter>
     </None>
+    <None Include="LightMap.vs">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="LightMap.fs">
+      <Filter>源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="container.jpg">
       <Filter>资源文件</Filter>
     </Image>
     <Image Include="awesomeface.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="container2.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="container2_specular.png">
       <Filter>资源文件</Filter>
     </Image>
   </ItemGroup>

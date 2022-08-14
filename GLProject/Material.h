@@ -13,8 +13,11 @@ public:
     float shininess;            //¸ß¹â°ë¾¶
     Material(Shader* shader, glm::vec3 _ambient, glm::vec3 _diffuse,glm::vec3 _specular, float _shininess);
     Material();
+    ~Material();
     void SetFloat(const std::string& name, bool value);
     void SetVec3(const std::string& name, glm::vec3 vec);
+    void SetVec3(const std::string& name, float x, float y, float z);
+    void SetMat4(const std::string& name, glm::mat4 matValue);
 private:
 
 };
