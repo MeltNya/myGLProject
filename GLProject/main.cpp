@@ -11,12 +11,13 @@
 #include"MyGLHelper.h"
 #include"GLProgram.h"
 #include"Material.h"
+#include"Light.h"
 void processInt(GLFWwindow* window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 float lastX = 400, lastY = 300;
 bool firstMouse = true;
 Camera camera(
-    glm::vec3(0.0f, 0.0f, 8.0f),
+    glm::vec3(0.0f, 0.0f, 5.0f),
     glm::vec3(0.0f, 1.0f, 0.0f), 10.0f, 180.0f
 );
 
@@ -26,14 +27,26 @@ int main() {
     glfwSetCursorPosCallback(glProgram.window, mouse_callback);
     //-----------------------------------------------shader complie---------------------------------------------------
   //  Shader ourShader("vshader2.vs", "light1.fs");
-    Shader ourShader("LightMap.vs", "LightMap.fs");
+    Shader ourShader("LightMap.vs", "PointLight.fs");
     Material ourMat(
         &ourShader,
         glm::vec3(1.0f, 0.5f, 0.31f),
         glm::vec3(1.0f, 0.5f, 0.31f),
         glm::vec3(0.5f, 0.5f, 0.5f),
         32.0f);
-    
+    Light dirLight,pointLight;
+    dirLight.CreateDirectionalLight(
+        glm::vec3(-0.2f, -1.0f, -0.3f),
+        glm::vec3(0.5f, 0.5f, 0.5f),
+        glm::vec3(1.0f, 1.0f, 1.0f),
+        glm::vec3(0.2f, 0.2f, 0.0f));
+    pointLight.CreatePointLight(
+        glm::vec3(0.0f, 1.0f, 1.0f),
+        glm::vec3(0.0f, 0.0f, 0.5f),
+        glm::vec3(1.0f, 1.0f, 0.0f),
+        glm::vec3(1.0f, 1.0f, 1.0f),
+        1.0f, 0.5f, 0.032f
+        );
 #pragma region Model Data
     float vertices[] = {
         // positions          // normals           // texture coords
@@ -115,8 +128,6 @@ int main() {
     unsigned int specularMap = MyGLHelper::LoadImage("container2_specular.png", 0, GL_RGBA, GL_RGBA);
     // -------------------------------------------------------------------------------------------
     ourShader.Use(); 
-    //ourShader.setInt("texture1", 0 );
-    //  ourShader.setInt("texture2", 1);
     ourShader.setInt("material.diffuse", 0);
     ourShader.setInt("material.specular", 1);
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
@@ -132,10 +143,10 @@ int main() {
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         //bind texture
-       /* glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D,texture1);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D,diffuseMap);
         glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, texture2);*/
+        glBindTexture(GL_TEXTURE_2D, specularMap);
 
         ourShader.Use();
         glm::vec3 lightColor;
@@ -143,15 +154,17 @@ int main() {
         lightColor.y = sin(glfwGetTime() * 0.7f);
         lightColor.z = sin(glfwGetTime() * 1.3f);
         glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);          // 降低影响
-        glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);    // 很低的影响
-        //ourShader.setVec3("material.ambient", ourMat.ambient);
-        //ourShader.setVec3("material.diffuse", ourMat.diffuse);
+        glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);    // 很低的影响;
         ourShader.setVec3("material.specular", ourMat.specular);
         ourShader.setFloat("material.shininess", ourMat.shininess);
-        ourShader.setVec3("light.ambient", diffuseColor);
-        ourShader.setVec3("light.diffuse", ambientColor);
-        ourShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
-        ourShader.setVec3("light.position", 1.2f, 1.0f, 2.0f);
+        ourShader.setVec3("light.ambient", pointLight.ambient);
+        ourShader.setVec3("light.diffuse", pointLight.diffuse);
+        ourShader.setVec3("light.specular", pointLight.specular);
+        //ourShader.setVec3("light.direction", dirLight.direction);
+        ourShader.setVec3("light.position", pointLight.position);
+        ourShader.setFloat("light.constant", pointLight.constant);
+        ourShader.setFloat("light.linear", pointLight.linear);
+        ourShader.setFloat("light.quadratic", pointLight.quadratic);
         ourShader.setVec3("viewPos", camera.Pos.x, camera.Pos.y, camera.Pos.z);
 
         //glm::mat4 view = camera.GetViewMat();

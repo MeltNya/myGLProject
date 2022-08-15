@@ -1,24 +1,24 @@
 ﻿  main.cpp
-E:\CPPcode\GLProject\GLProject\main.cpp(142,27): warning C4244: “=”: 从“double”转换到“T”，可能丢失数据
+E:\CPPcode\GLProject\GLProject\main.cpp(153,27): warning C4244: “=”: 从“double”转换到“T”，可能丢失数据
           with
           [
               T=float
           ]
-E:\CPPcode\GLProject\GLProject\main.cpp(143,27): warning C4244: “=”: 从“double”转换到“T”，可能丢失数据
+E:\CPPcode\GLProject\GLProject\main.cpp(154,27): warning C4244: “=”: 从“double”转换到“T”，可能丢失数据
           with
           [
               T=float
           ]
-E:\CPPcode\GLProject\GLProject\main.cpp(144,27): warning C4244: “=”: 从“double”转换到“T”，可能丢失数据
+E:\CPPcode\GLProject\GLProject\main.cpp(155,27): warning C4244: “=”: 从“double”转换到“T”，可能丢失数据
           with
           [
               T=float
           ]
-E:\CPPcode\GLProject\GLProject\main.cpp(96,28): warning C4101: “EBO”: 未引用的局部变量
-E:\CPPcode\GLProject\GLProject\main.cpp(188,17): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\CPPcode\GLProject\GLProject\main.cpp(189,17): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\CPPcode\GLProject\GLProject\main.cpp(192,19): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\CPPcode\GLProject\GLProject\main.cpp(193,19): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\CPPcode\GLProject\GLProject\main.cpp(194,13): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\CPPcode\GLProject\GLProject\main.cpp(195,13): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+E:\CPPcode\GLProject\GLProject\main.cpp(109,28): warning C4101: “EBO”: 未引用的局部变量
+E:\CPPcode\GLProject\GLProject\main.cpp(201,17): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+E:\CPPcode\GLProject\GLProject\main.cpp(202,17): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+E:\CPPcode\GLProject\GLProject\main.cpp(205,19): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\CPPcode\GLProject\GLProject\main.cpp(206,19): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\CPPcode\GLProject\GLProject\main.cpp(207,13): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+E:\CPPcode\GLProject\GLProject\main.cpp(208,13): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
   GLProject.vcxproj -> E:\CPPcode\GLProject\Debug\GLProject.exe

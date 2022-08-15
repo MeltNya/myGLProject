@@ -36,6 +36,9 @@
     <ClCompile Include="Material.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GLGeometry.h">
@@ -57,6 +60,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Material.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -89,6 +95,12 @@
       <Filter>源文件</Filter>
     </None>
     <None Include="LightMap.fs">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="DirectionalLight.fs">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="PointLight.fs">
       <Filter>源文件</Filter>
     </None>
   </ItemGroup>
