@@ -6,15 +6,15 @@
 class Material
 {
 public:
-    Shader* shader;
+    Shader shader;
     glm::vec3 ambient;       //环境光颜色
     glm::vec3 diffuse;         //漫反射颜色
     glm::vec3 specular;      //高光颜色
     unsigned int diffuseMap;
     unsigned int specularMap;
     float shininess;            //高光半径
-    Material(Shader* _shader, glm::vec3 _ambient, glm::vec3 _diffuse,glm::vec3 _specular, float _shininess);
-    Material(Shader* _shader, unsigned int _diffuse, unsigned int _specular);
+    Material(Shader _shader, glm::vec3 _ambient, glm::vec3 _diffuse,glm::vec3 _specular, float _shininess);
+    Material(Shader _shader, unsigned int _diffuse, unsigned int _specular);
     Material();
     ~Material();
     void SetFloat(const std::string& name, bool value);

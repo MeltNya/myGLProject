@@ -12,6 +12,7 @@
 #include"GLProgram.h"
 #include"Material.h"
 #include"Light.h"
+#include"Mesh.h"
 void processInt(GLFWwindow* window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 float lastX = 400, lastY = 300;
@@ -29,7 +30,7 @@ int main() {
   //  Shader ourShader("vshader2.vs", "light1.fs");
     Shader ourShader("LightMap.vs", "PointLight.fs");
     Material ourMat(
-        &ourShader,
+        ourShader,
         glm::vec3(1.0f, 0.5f, 0.31f),
         glm::vec3(1.0f, 0.5f, 0.31f),
         glm::vec3(0.5f, 0.5f, 0.5f),
@@ -106,7 +107,9 @@ int main() {
         glm::vec3(-1.3f,  1.0f, -1.5f)
     };
 #pragma endregion
-    unsigned int VBO, VAO, EBO;
+    Mesh cubes(vertices);
+
+   /* unsigned int VBO, VAO, EBO;
     glGenVertexArrays(1, &VAO);   //²úÉúvao 
     glGenBuffers(1, &VBO);
     //glGenBuffers(1, &EBO);
@@ -119,7 +122,7 @@ int main() {
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float) ) );
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
+    glEnableVertexAttribArray(2);*/
     //-------------------------------------texture----------------------------
     unsigned int texture1,texture2;
     texture1= MyGLHelper::LoadImage("container.jpg", 0, GL_RGB, GL_RGB);
@@ -179,14 +182,13 @@ int main() {
             ourShader.setMat4("model", model);
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
-        glBindVertexArray(VAO);
-      //  glDrawArrays(GL_TRIANGLES, 0, 3);
-      //  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+       // glBindVertexArray(VAO);
+        cubes.Draw(ourMat.shader);
         glfwSwapBuffers(glProgram.window);
         glfwPollEvents();
     }
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
+   // glDeleteVertexArrays(1, &VAO);
+    //glDeleteBuffers(1, &VBO);
   //  glDeleteBuffers(1, &EBO);
     glfwTerminate();
     return 0;
