@@ -184,6 +184,8 @@
     <None Include="LightMap.fs" />
     <None Include="LightMap.vs" />
     <None Include="mat1.fs" />
+    <None Include="model.fs" />
+    <None Include="model.vs" />
     <None Include="packages.config" />
     <None Include="PointLight.fs" />
     <None Include="vshader.vs">

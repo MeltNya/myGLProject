@@ -4,6 +4,13 @@ Model::~Model()
 {
 }
 
+void Model::Draw(Shader shader)
+{
+    //cout << "start draw mesh" << endl;
+    for (unsigned int i = 0; i < meshes.size(); i++)
+        meshes[i].Draw(shader);
+}
+
 void Model::loadModel(string path)
 {
 	Assimp::Importer importer;
@@ -13,7 +20,8 @@ void Model::loadModel(string path)
         cout << "ERROR::ASSIMP::" << importer.GetErrorString() << endl;
         return;
     }
-    directory = path.substr(0, path.find_last_of('/0'));
+    cout << "load a model" << endl;
+    directory = path.substr(0, path.find_last_of('/'));
     processNode(scene->mRootNode, scene);
 }
 
@@ -72,9 +80,12 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
         aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
         vector<Texture> diffuseMaps = loadMaterialTextures(material,    aiTextureType_DIFFUSE, "texture_diffuse");
         textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-        vector<Texture> specularMaps = loadMaterialTextures(material,
-            aiTextureType_SPECULAR, "texture_specular");
+        vector<Texture> specularMaps = loadMaterialTextures(material,   aiTextureType_SPECULAR, "texture_specular");
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+        std::vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
+        textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
+        std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
+        textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
     }
     return Mesh(vertices, indices, textures);
 }
@@ -100,6 +111,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type,
         if (!skip)
         {   // 如果纹理还没有被加载，则加载它
             Texture texture;
+            //从文件加载图片
             texture.id = TextureFromFile(str.C_Str(), directory,false);
             texture.type = typeName;
             texture.path = str.C_Str();
@@ -135,12 +147,14 @@ unsigned int Model::TextureFromFile(const char* path, const string& directory, b
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        std::cout << "load texture for model:" << filename << std::endl;
     }
     else
     {
         std::cout << "Texture failed to load at path: " << path << std::endl;
         
     }
+
     stbi_image_free(data);
     return texture;
 }

@@ -1,6 +1,7 @@
 #define GLEW_STATIC
 #define STB_IMAGE_IMPLEMENTATION
 #include<iostream>
+#include <filesystem>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include"Shader.h"
@@ -13,6 +14,8 @@
 #include"Material.h"
 #include"Light.h"
 #include"Mesh.h"
+#include"Model.h"
+
 void processInt(GLFWwindow* window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 float lastX = 400, lastY = 300;
@@ -28,7 +31,8 @@ int main() {
     glfwSetCursorPosCallback(glProgram.window, mouse_callback);
     //-----------------------------------------------shader complie---------------------------------------------------
   //  Shader ourShader("vshader2.vs", "light1.fs");
-    Shader ourShader("LightMap.vs", "PointLight.fs");
+    Shader ourShader("model.vs", "model.fs");
+    Model ourModel("resources/objects/nanosuit/nanosuit.obj");
     Material ourMat(
         ourShader,
         glm::vec3(1.0f, 0.5f, 0.31f),
@@ -107,7 +111,7 @@ int main() {
         glm::vec3(-1.3f,  1.0f, -1.5f)
     };
 #pragma endregion
-    Mesh cubes(vertices);
+  //  Mesh cubes(vertices);
 
    /* unsigned int VBO, VAO, EBO;
     glGenVertexArrays(1, &VAO);   //²úÉúvao 
@@ -124,7 +128,7 @@ int main() {
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(2);*/
     //-------------------------------------texture----------------------------
-    unsigned int texture1,texture2;
+  /*  unsigned int texture1,texture2;
     texture1= MyGLHelper::LoadImage("container.jpg", 0, GL_RGB, GL_RGB);
     texture2= MyGLHelper::LoadImage("awesomeface.png", 0, GL_RGBA, GL_RGBA);
     unsigned int diffuseMap = MyGLHelper::LoadImage("container2.png", 0, GL_RGBA, GL_RGBA);
@@ -132,9 +136,8 @@ int main() {
     // -------------------------------------------------------------------------------------------
     ourShader.Use(); 
     ourShader.setInt("material.diffuse", 0);
-    ourShader.setInt("material.specular", 1);
-    glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-    ourShader.setMat4("projection", projection);
+    ourShader.setInt("material.specular", 1);*/
+
 
     //loopäÖÈ¾Ñ­»·
     while (!glfwWindowShouldClose(glProgram.window))
@@ -146,12 +149,14 @@ int main() {
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         //bind texture
-        glActiveTexture(GL_TEXTURE0);
+
+
+        ourShader.Use();
+        ourShader.setMat4("view", camera.GetViewMat());
+        /*glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D,diffuseMap);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, specularMap);
-
-        ourShader.Use();
         glm::vec3 lightColor;
         lightColor.x = sin(glfwGetTime() * 2.0f);
         lightColor.y = sin(glfwGetTime() * 0.7f);
@@ -170,9 +175,8 @@ int main() {
         ourShader.setFloat("light.quadratic", pointLight.quadratic);
         ourShader.setVec3("viewPos", camera.Pos.x, camera.Pos.y, camera.Pos.z);
 
-        //glm::mat4 view = camera.GetViewMat();
-        ourShader.setMat4("view", camera.GetViewMat());
-        
+
+
         for (size_t i = 0; i < 10; i++)
         {
             glm::mat4 model = glm::mat4(1.0f);
@@ -184,17 +188,29 @@ int main() {
         }
        // glBindVertexArray(VAO);
         cubes.Draw(ourMat.shader);
+
+    }*/
+    // glDeleteVertexArrays(1, &VAO);
+     //glDeleteBuffers(1, &VBO);
+   //  glDeleteBuffers(1, &EBO);
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+        model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));	// it's a bit too big for our scene, so scale it down
+        ourShader.setMat4("model", model);
+        glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+        ourShader.setMat4("projection", projection);
+        ourModel.Draw(ourShader);
         glfwSwapBuffers(glProgram.window);
         glfwPollEvents();
     }
-   // glDeleteVertexArrays(1, &VAO);
-    //glDeleteBuffers(1, &VBO);
-  //  glDeleteBuffers(1, &EBO);
-    glfwTerminate();
-    return 0;
+        glfwTerminate();
+         return 0;
 }
-void processInt(GLFWwindow* window) {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_KEY_ESCAPE) {
+
+void processInt(GLFWwindow* window)
+{
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_KEY_ESCAPE)
+    {
         glfwSetWindowShouldClose(window, true);
     }
 }

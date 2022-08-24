@@ -6,7 +6,7 @@
 class Model
 {
 public:
-    Model(char* path)
+    Model(string  path)
     {
         loadModel(path);
     }
@@ -15,7 +15,7 @@ public:
 private:
     vector<Texture> textures_loaded;
     vector<Mesh> meshes;
-    string directory;
+    string directory;                                                                                    //保存当前加载模型所在的目录
 
     void loadModel(string path);
     void processNode(aiNode* node, const aiScene* scene);

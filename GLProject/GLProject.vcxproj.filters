@@ -110,6 +110,12 @@
       <Filter>源文件</Filter>
     </None>
     <None Include="packages.config" />
+    <None Include="model.vs">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="model.fs">
+      <Filter>源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="container.jpg">
