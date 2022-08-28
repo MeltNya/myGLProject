@@ -1,9 +1,2 @@
-﻿  main.cpp
-  The contents of <filesystem> are available only with C++17 or later.
-E:\CPPcode\GLProject\GLProject\main.cpp(219,17): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\CPPcode\GLProject\GLProject\main.cpp(220,17): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\CPPcode\GLProject\GLProject\main.cpp(223,19): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\CPPcode\GLProject\GLProject\main.cpp(224,19): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\CPPcode\GLProject\GLProject\main.cpp(225,13): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\CPPcode\GLProject\GLProject\main.cpp(226,13): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+﻿  GLObject.cpp
   GLProject.vcxproj -> E:\CPPcode\GLProject\Debug\GLProject.exe

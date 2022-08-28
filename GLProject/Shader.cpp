@@ -51,6 +51,7 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath){
 		checkCompileErrors(fragment_shader, "PROGRAM");
 		glDeleteShader(vertex_shader);
 		glDeleteShader(fragment_shader);
+		cout << "create a shader" << endl;
 }
 //check the shader compile error
 void Shader::checkCompileErrors(unsigned int shader, std::string type) {

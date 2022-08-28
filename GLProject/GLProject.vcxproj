@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="GLObject.cpp" />
     <ClCompile Include="GLProgram.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
@@ -163,6 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="GLObject.h" />
     <ClInclude Include="GLProgram.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Material.h" />
@@ -173,31 +175,9 @@
     <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="basicLight.fs" />
-    <None Include="basicLight.vs" />
-    <None Include="DirectionalLight.fs" />
-    <None Include="fshader.fs">
-      <FileType>Document</FileType>
-    </None>
-    <None Include="fshader2.fs" />
-    <None Include="light1.fs" />
-    <None Include="LightMap.fs" />
-    <None Include="LightMap.vs" />
-    <None Include="mat1.fs" />
-    <None Include="model.fs" />
-    <None Include="model.vs" />
     <None Include="packages.config" />
-    <None Include="PointLight.fs" />
-    <None Include="vshader.vs">
-      <FileType>Document</FileType>
-    </None>
-    <None Include="vshader2.vs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="awesomeface.png" />
-    <Image Include="container.jpg" />
-    <Image Include="container2.png" />
-    <Image Include="container2_specular.png" />
+    <None Include="Shader\advanced_opengl\depthTest.fs" />
+    <None Include="Shader\advanced_opengl\depthTest.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

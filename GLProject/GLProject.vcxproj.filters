@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="shader">
+      <UniqueIdentifier>{3f1eefa3-ad07-4adb-8937-db8d007d0590}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -40,6 +43,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Model.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GLObject.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -71,64 +77,17 @@
     <ClInclude Include="Model.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="GLObject.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="vshader.vs">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="fshader.fs">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="vshader2.vs">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="fshader2.fs">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="light1.fs">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="basicLight.vs">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="basicLight.fs">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="mat1.fs">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="LightMap.vs">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="LightMap.fs">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="DirectionalLight.fs">
-      <Filter>源文件</Filter>
-    </None>
-    <None Include="PointLight.fs">
-      <Filter>源文件</Filter>
-    </None>
     <None Include="packages.config" />
-    <None Include="model.vs">
-      <Filter>源文件</Filter>
+    <None Include="Shader\advanced_opengl\depthTest.vs">
+      <Filter>shader</Filter>
     </None>
-    <None Include="model.fs">
-      <Filter>源文件</Filter>
+    <None Include="Shader\advanced_opengl\depthTest.fs">
+      <Filter>shader</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="container.jpg">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="awesomeface.png">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="container2.png">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="container2_specular.png">
-      <Filter>资源文件</Filter>
-    </Image>
   </ItemGroup>
 </Project>
