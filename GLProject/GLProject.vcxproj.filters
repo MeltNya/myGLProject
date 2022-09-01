@@ -89,5 +89,14 @@
     <None Include="Shader\advanced_opengl\depthTest.fs">
       <Filter>shader</Filter>
     </None>
+    <None Include="Shader\advanced_opengl\stencilTest.vs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="Shader\advanced_opengl\stencilTest.fs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="Shader\advanced_opengl\stencil_outline.fs">
+      <Filter>shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

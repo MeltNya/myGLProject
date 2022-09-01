@@ -22,11 +22,14 @@ public:
     vector<Vertex>  vertices;
     vector<unsigned int>  indices;
     vector<Texture>  textures;
+
     Mesh(float vertices[]);
     Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures);
     void Draw(Shader shader);
+    void Clear();
 private:
     unsigned int VAO, VBO, EBO;
     void setupMesh();
+    
 };
 

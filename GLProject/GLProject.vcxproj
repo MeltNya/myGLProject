@@ -178,6 +178,9 @@
     <None Include="packages.config" />
     <None Include="Shader\advanced_opengl\depthTest.fs" />
     <None Include="Shader\advanced_opengl\depthTest.vs" />
+    <None Include="Shader\advanced_opengl\stencilTest.fs" />
+    <None Include="Shader\advanced_opengl\stencilTest.vs" />
+    <None Include="Shader\advanced_opengl\stencil_outline.fs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -28,11 +28,18 @@ Camera camera(
 int main() {
     GLProgram glProgram;
     glProgram.WindowInit();
+    glEnable(GL_DEPTH_TEST);                                         //开启深度测试
+    glDepthFunc(GL_LESS);                                               //深度值小于缓冲时通过测试
+    glEnable(GL_STENCIL_TEST);                                      //开启模板测试
+    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);                     //模板参考值=1将通过
+    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
     glfwSetCursorPosCallback(glProgram.window, mouse_callback);
     //-----------------------------------------------shader complie---------------------------------------------------
-  //  Shader ourShader("vshader2.vs", "light1.fs");
+    
     Shader ourShader("Shader/model.vs", "Shader/model.fs");
     Shader cubeShader("Shader/advanced_opengl/depthTest.vs", "Shader/advanced_opengl/depthTest.fs");
+    Shader normalShader("Shader/advanced_opengl/stencilTest.vs", "Shader/advanced_opengl/stencilTest.fs");
+    Shader outlineShader("Shader/advanced_opengl/stencilTest.vs", "Shader/advanced_opengl/stencil_outline.fs");
   //  Model ourModel("resources/objects/nanosuit/nanosuit.obj");
     Material ourMat(
         ourShader,
@@ -53,46 +60,95 @@ int main() {
         glm::vec3(1.0f, 1.0f, 1.0f),
         1.0f, 0.5f, 0.032f
         );
+    unsigned int cubeTexture = MyGLHelper::loadImageA("resources/images/marble.jpg");
+    unsigned int floorTexture = MyGLHelper::loadImageA("resources/images/metal.png");
 
-    GLObject obj1;
+    GLObject obj1,obj2;
     obj1.CreateCube();
-
-    unsigned int cubeTexture = MyGLHelper::LoadImage("resources/images/marble.jpg", 0, GL_RGB, GL_RGB);
-   // unsigned int floorTexture =
-
+    obj1.SetPosition(glm::vec3(-1.0f, 0.0f, -1.0f));
+    //obj1.SetTexture(cubeTexture,stencilShader);
+    normalShader.Use();
+    normalShader.setInt("texture1", 0);
+    obj2.CreateCube();
+    obj2.SetPosition(glm::vec3(2.0f, 0.0f, 0.0f));
+    normalShader.Use();
+    normalShader.setInt("texture1", 0);
+    //obj2.SetTexture(cubeTexture, stencilShader);
+    GLObject floor;
+    floor.CreatePlane();
+    floor.SetTexture(floorTexture, cubeShader);
     //loop渲染循环
     while (!glfwWindowShouldClose(glProgram.window))
     {
         //监听事件
         processInt(glProgram.window);
-        //render()
-        //清屏
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        //bind texture
-        ourShader.Use();
-        ourShader.setMat4("view", camera.GetViewMat());
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);   //    clear the color and depth buffer
 
-    // glDeleteVertexArrays(1, &VAO);
-     //glDeleteBuffers(1, &VBO);
-   //  glDeleteBuffers(1, &EBO);
         glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-        model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));	// it's a bit too big for our scene, so scale it down
-        ourShader.setMat4("model", model);
+
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-        ourShader.setMat4("projection", projection);
-     //   ourModel.Draw(ourShader);
+        
+        outlineShader.Use(); 
+        outlineShader.setMat4("projection", projection);
+        outlineShader.setMat4("view", camera.GetViewMat());
+        normalShader.Use();
+        normalShader.setMat4("view", camera.GetViewMat());
+        normalShader.setMat4("projection", projection);
 
-        //draw cube
+        //draw floor as normal
+        glStencilMask(0x00);
+        glBindVertexArray(floor.VAO);
+        glBindTexture(GL_TEXTURE_2D, floorTexture);
+        normalShader.setMat4("model", glm::mat4(1.0f));
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glBindVertexArray(0);
+        // draw objects as normal;
+        glStencilFunc(GL_ALWAYS, 1, 0xFF);
+        glStencilMask(0xFF);
+
+        glBindVertexArray(obj1.VAO);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, cubeTexture);
+        model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
+        normalShader.setMat4("model", model);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+        normalShader.setMat4("model", model);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+
+       //draw outline, this time disabling stencil writing.
+        glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+        glStencilMask(0x00);
+        glDisable(GL_DEPTH_TEST);
+        outlineShader.Use();
+        float scale = 1.1f;
+        glBindVertexArray(obj1.VAO);
+        glBindTexture(GL_TEXTURE_2D, cubeTexture);;
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
+        model = glm::scale(model, glm::vec3(scale, scale, scale));
+        outlineShader.setMat4("model", model);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(scale, scale, scale));
+        outlineShader.setMat4("model", model);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glBindVertexArray(0);
        
-        obj1.Draw(cubeShader);
-
+        glStencilMask(0xFF);
+        glStencilFunc(GL_ALWAYS, 0, 0xFF);
+        glEnable(GL_DEPTH_TEST);
+        //swap buffer
         glfwSwapBuffers(glProgram.window);
         glfwPollEvents();
     }
-        glfwTerminate();
-         return 0;
+    obj1.Clear();
+    floor.Clear();
+    glfwTerminate();
+    return 0;
 }
 
 void processInt(GLFWwindow* window)

@@ -80,3 +80,10 @@ void Mesh::setupMesh()
 
     glBindVertexArray(0);
 }
+
+void Mesh::Clear()
+{
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &EBO);
+}
